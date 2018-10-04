@@ -221,7 +221,7 @@
         /// </returns>
         public IProductContent TypedProductContentBySlug(string slug)
         {
-            return _cache.GetBySlug(slug, GetProductContentBySlug);
+            return GetProductContentBySlug(slug);// _cache.GetBySlug(slug, );
         }
 
         /// <summary>

@@ -143,7 +143,30 @@
 
             var clone = CloneHelper.JsonClone<ProductDisplay>(display);
 
-            return new ProductContent(publishedContentType, optionContentTypes, clone, _parent, _defaultStoreLanguage);
+            return new ProductContent(publishedContentType, optionContentTypes, clone, GetParent(), GetLanguage());
+        }
+
+        protected string GetLanguage()
+        {
+            var language = _defaultStoreLanguage;
+            var umbracoContext = Umbraco.Web.UmbracoContext.Current;
+            if (umbracoContext != null && umbracoContext.IsFrontEndUmbracoRequest)
+            {
+                language = umbracoContext.PublishedContentRequest.Culture.Name;
+            }
+            return language;
+        }
+
+        protected IPublishedContent GetParent()
+        {
+            var parent = _parent;
+            var umbracoContext = Umbraco.Web.UmbracoContext.Current;
+            if (umbracoContext != null && umbracoContext.PublishedContentRequest != null)
+            {
+                var helper = new Umbraco.Web.UmbracoHelper(umbracoContext);
+                parent = helper.TypedContent(umbracoContext.PublishedContentRequest.UmbracoDomain.RootContentId);
+            }
+            return parent;
         }
 
         /// <summary>
