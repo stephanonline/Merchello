@@ -161,7 +161,7 @@
         {
             var parent = _parent;
             var umbracoContext = Umbraco.Web.UmbracoContext.Current;
-            if (umbracoContext != null && umbracoContext.PublishedContentRequest != null)
+            if (umbracoContext != null && umbracoContext.PublishedContentRequest != null && umbracoContext.PublishedContentRequest.UmbracoDomain != null)
             {
                 var helper = new Umbraco.Web.UmbracoHelper(umbracoContext);
                 parent = helper.TypedContent(umbracoContext.PublishedContentRequest.UmbracoDomain.RootContentId);
